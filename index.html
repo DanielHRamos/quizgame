@@ -4,35 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📝Quiz</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div id="main-screen" class="screen-active">
+        <div id="main-screen" class="screen active">            
             <div class="main-container">
                 <h1>📝Quiz sobre programación</h1>
                     <div class="welcome-section">
                         <div>
-                            <p class="subtitle">¡Aquí pondrás a prueba tus conocimientos! </p>
+                            <p class="subtitle">¡Aquí pondrás a prueba tus conocimientos! Tendrás que responder 10 preguntas sobre programación de selección simple. Tienes 5 minutos para responder todas.</p>
                             <p class="description">
                                 Selecciona una opción para continuar
                             </p>
                         </div>
                         <div class="main-buttons">
                             <button class="main-btn" id="new-game-btn">
-                                <span>Iniciar juego</span>
+                                <span> Nuevo juego </span>
                             </button>
                             <button class="main-btn" id="score-btn">
-                                <span>Ver tabla de puntuación</span>
+                                <span> Ver tabla de puntuación </span>
                             </button>
-
-
                         </div>
-
                     </div>
-
+            </div>
+        </div>
+        <div id="username-screen" class="screen">
+            <div class="form-container">
+                <div>
+                <h1>¡Pongamos a prueba tu conocimiento!</h1>                
+                <p class="description"> 
+                    Ingresa tu nombre para comenzar 
+                </p>
+                <form id="username-form">
+                    <div class="input-group">            
+                        <label for="username"></label>
+                        <input type="text" id="username" placeholder="Nombre" required>
+                    </div>
+                    <button type="submit" class="main-btn" id="submit-btn">Continuar</button>
+                </form>
+                </div>
             </div>
         </div>
 
+        <div id="quiz-screen" class="screen">             
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <p id="timer">⏱ 5:00</p>
+                    <p id="question-number">1/10</p>                      
+                </div>                                        
+                <h1>Pregunta 1</h1>
+                
+                <div class="quiz-section">
+                    <p class="subtitle">
+                        ¿Qué es un lenguaje de programación?
+                    </p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-answer="A">A) Un conjunto de reglas para escribir código</button>
+                        <button class="quiz-option" data-answer="B">B) Un tipo de software para editar texto</button>
+                        <button class="quiz-option" data-answer="C">C) Un sistema operativo</button>
+                        <button class="quiz-option" data-answer="D">D) Un hardware de computadora</button>
+                    </div>
+                    <button class="main-btn" id="continue-btn">
+                        <span> Continuar </span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+<script src="index.js"></script>
 </body>
 </html>
