@@ -1,2 +1,2 @@
-# quizthegame.github.io
-quizzgame
+# quizgame
+quizgame
