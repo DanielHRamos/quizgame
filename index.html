@@ -22,7 +22,7 @@
                             <button class="main-btn" id="new-game-btn">
                                 <span> Nuevo juego </span>
                             </button>
-                            <button class="main-btn" id="score-btn">
+                            <button class="main-btn" id="score-btn" onclick="showScoreboard()">
                                 <span> Ver tabla de puntuación </span>
                             </button>
                         </div>
@@ -32,9 +32,9 @@
         <div id="username-screen" class="screen">
             <div class="form-container">
                 <div>
-                <h1>¡Pongamos a prueba tu conocimiento!</h1>                
-                <p class="description"> 
-                    Ingresa tu nombre para comenzar 
+                <h1>¡Pongamos a prueba tu conocimiento!💻</h1>                
+                <p class="description">
+                    Ingresa tu nombre para comenzar
                 </p>
                 <form id="username-form">
                     <div class="input-group">            
@@ -47,27 +47,42 @@
             </div>
         </div>
 
-        <div id="quiz-screen" class="screen">             
+
+        <div id="quiz-screen" class="screen">            
             <div class="quiz-container">
                 <div class="quiz-header">
                     <p id="timer">⏱ 5:00</p>
                     <p id="question-number">1/10</p>                      
-                </div>                                        
-                <h1>Pregunta 1</h1>
-                
+                </div>                                                                      
                 <div class="quiz-section">
-                    <p class="subtitle">
-                        ¿Qué es un lenguaje de programación?
-                    </p>
-                    <div class="quiz-options">
-                        <button class="quiz-option" data-answer="A">A) Un conjunto de reglas para escribir código</button>
-                        <button class="quiz-option" data-answer="B">B) Un tipo de software para editar texto</button>
-                        <button class="quiz-option" data-answer="C">C) Un sistema operativo</button>
-                        <button class="quiz-option" data-answer="D">D) Un hardware de computadora</button>
+                    <div>
+                        <h2 id="question"> Aqui aparece la pregunta xd </h2>
                     </div>
-                    <button class="main-btn" id="continue-btn">
+                    <div id="options-container">
+                        <button class="option-btn" onclick="checkAnswer('option1')">Option</button>
+                        <button class="option-btn" onclick="checkAnswer('option2')">Option</button>
+                        <button class="option-btn" onclick="checkAnswer('option3')">Option</button>
+                        <button class="option-btn" onclick="checkAnswer('option4')">Option</button>
+                    </div>
+                    <button class="main-btn" id="continue-btn" onclick="nextQuestion()">
                         <span> Continuar </span>
                     </button>
+                </div>
+            </div>
+        </div>
+        <div id="results-screen" class="screen">
+            <div class="results-container">                
+                <h1>Resultados</h1>
+                <div class="results-section">
+                    <p>Aqui van los resultados del quiz xd</p>
+                </div>
+                <div class="result-btn">
+                <button class="main-btn" id="new-quiz-btn">
+                    <span> Nuevo quiz </span>
+                </button>
+                <button class="main-btn" id="back-menu-btn">
+                    <span> Volver al menu </span>                    
+                </button>
                 </div>
             </div>
         </div>

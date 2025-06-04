@@ -5,49 +5,60 @@
   box-sizing: border-box;  
 }
 
+
 body{
     font-family: "Ubuntu", sans-serif;
     color: #333;
 
+
     background: linear-gradient(to right, #4b2f98de, #000000 108%);
 
+
     min-height: 186vh;
+
 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+
 .container{
     width: 180%;
     max-width: 580px;
     margin: 0 auto;
     padding: 28px;
-    
+   
 }
+
 
 .main-container,
 .form-container,
-.quiz-container {
+.quiz-container,
+.results-container {
     background: #EDEFEF;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
+
 .main-container {
     text-align: center;    
 }
 
-.welcome-section { 
+
+.welcome-section {
     margin: 30px 0;    
 }
+
 
 .main-buttons {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
+
 
 .main-btn{
     width: 100%;
@@ -63,6 +74,7 @@ body{
     cursor: pointer;
 }
 
+
 .main-btn:hover{
     background-color: #00f7ff;
     color: white;
@@ -70,13 +82,17 @@ body{
     transform: scale(1.05);
 }
 
+
 h1 {
     text-align: center;
     color: #4b2f98;
-    font-size: 2.5em;
+    font-size: 2.4em;
+    justify-content: center;
 }
 
+
 .quiz-header {
+    font: bold 1.5em "Ubuntu", sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -84,14 +100,16 @@ h1 {
     font-size: 1.2em;
 }
 
-.quiz-option {
+
+.option-btn {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-bottom: 20px;
 }
 
-.quiz-option {
+
+.option-btn {
     width: 100%;
     padding: 25px 28px;
     background: #FFFAFA;
@@ -102,25 +120,32 @@ h1 {
     font-weight: 600;
     transition: 0.3s ease;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer; 
+    cursor: pointer;
 }
 
-.quiz-option:hover{
-    background-color: #0e3335;
-    color: white;
+
+.option-btn:hover{
+    background-color: transparent;
+    color: black;
     box-shadow: 0 0 15px #00f7ff, 0 0 30px #00f7ff;
     transform: scale(1.05);
 }
 
-.description {
+
+.description,
+.quiz-section {
     font-size: 1.2em;
     color: #000000;
-    margin-bottom: 20px;    
+    margin-bottom: 20px;
+    justify-content: center;
+    text-align: center;
 }
+
 
 .input-group {
     margin-bottom: 25px;
 }
+
 
 label {
     display: block;
@@ -129,6 +154,7 @@ label {
     font-weight: 500;
     font-size: 1.1em;    
 }
+
 
 input,
 select {
@@ -141,6 +167,7 @@ select {
     background-color: #fafafa;
 }
 
+
 input:focus {
     outline: none;
     border-color: #4b2f98;
@@ -148,23 +175,131 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);    
 }
 
+
 .screen{
     display: none;
     animation: fadeIn 0.5s ease;
 }
 
+
 .screen.active{
     display: block;
 }
+
 
 keyframes fadeIn {
     from {
         opacity: 0;
         transform: translate(20px);
-        
+       
     }
     to {
         opacity: 1;
-        transform: ttranslate(0);
+        transform: translate(0);
     }
+}
+
+
+.result-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+
+.option-btn.correct {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+
+.option-btn.incorrect {
+    background-color: #F44336 !important;
+    color: white !important;
+}
+
+
+.option-btn.selected {
+    border: 3px solid #4b2f98;
+}
+
+
+#continue-btn {
+    display: none;
+    margin-top: 20px;
+}
+
+
+.results-section {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    margin: 20px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.results-section h2 {
+    color: #4b2f98;
+    margin-bottom: 15px;
+}
+
+
+.results-section p {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.scoreboard {
+    margin-top: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-left: -13px;
+}
+
+
+.scoreboard h3 {
+    color: #4b2f98;
+    margin-bottom: 10px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: -13px;
+}
+
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;    
+}
+
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+tr:hover {
+    background-color: #f5f5f5;
 }
