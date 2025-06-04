@@ -199,4 +199,293 @@ function resetQuiz() {
    
     document.getElementById("continue-btn").style.display = "none";
 
-    //test
+function startTimer() {
+   
+    if (timer) clearInterval(timer);
+   
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+       
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            endQuiz();
+        }
+    }, 1000);
+}
+
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById("timer").textContent = `⏱ ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+
+
+
+function handleSubmitUsername(event) {
+    event.preventDefault();
+    const username = document.getElementById("username");
+}
+
+
+function loadQuestion() {
+    const questionData = selectedQuestions[currentQuestionIndex];
+    document.getElementById("question").textContent = questionData.question;
+    document.getElementById("question-number").textContent = `${currentQuestionIndex + 1}/10`;
+
+
+    const optionButtons = document.querySelectorAll(".option-btn");
+    optionButtons.forEach((button, index) => {
+        button.textContent = questionData.options[index];
+        button.dataset.answer = questionData.options[index];
+        button.style.backgroundColor = "#FFFAFA";
+        button.disabled = false;
+    });
+
+
+    buttons.continueBtn.style.display = "none";
+}
+
+
+function checkAnswer(selectedOption) {
+    const selectedButton = document.querySelector(`[onclick="checkAnswer('${selectedOption}')"]`);
+    const questionData = selectedQuestions[currentQuestionIndex];
+    const optionButtons = document.querySelectorAll(".option-btn");
+   
+   
+    optionButtons.forEach(button => {
+        button.disabled = true;
+    });
+   
+   
+    buttons.continueBtn.style.display = "block";
+   
+   
+    optionButtons.forEach(button => {
+        if (button.textContent === questionData.answer) {
+            button.style.backgroundColor = "#4CAF50";
+        } else if (button === selectedButton && button.textContent !== questionData.answer) {
+            button.style.backgroundColor = "#F44336";
+        }
+    });
+   
+   
+    if (selectedButton.textContent === questionData.answer) {
+        score++;
+    }
+}
+
+
+function nextQuestion() {
+    currentQuestionIndex++;
+   
+    if (currentQuestionIndex < selectedQuestions.length) {
+        loadQuestion();
+    } else {
+        endQuiz();
+    }
+}
+
+
+function endQuiz() {
+    clearInterval(timer);
+   
+   
+    currentUser.score = score;
+    currentUser.timeLeft = timeLeft;
+    currentUser.date = new Date().toLocaleString();
+   
+   
+    saveGameResult();
+   
+   
+    showResults();
+    showScreen("resultsScreen");
+}
+
+
+function showScoreboard() {
+    const gameResults = JSON.parse(localStorage.getItem('quizResults')) || [];
+   
+    if (gameResults.length === 0) {
+        alert("Aún no hay puntuaciones guardadas.");
+        return;
+    }
+   
+   
+    let scoreboardHTML = `
+        <div class="scoreboard-screen">
+            <h2>🏆 Mejores Puntuaciones 🏆</h2>
+            <table>
+                <tr>
+                    <th>Posición</th>
+                    <th>Nombre</th>
+                    <th>Puntuación</th>
+                    <th>Tiempo Restante</th>
+                    <th>Fecha</th>
+                </tr>
+    `;
+   
+    gameResults.forEach((result, index) => {
+        scoreboardHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${result.username}</td>
+                <td>${result.score}/10</td>
+                <td>${formatTime(result.timeLeft)}</td>
+                <td>${result.date}</td>
+            </tr>
+        `;
+    });
+   
+    scoreboardHTML += `</table></div>`;
+   
+   
+    document.querySelector(".results-section").innerHTML = scoreboardHTML;
+    showScreen("resultsScreen");
+}
+
+
+function saveGameResult() {
+   
+    const gameResults = JSON.parse(localStorage.getItem('quizResults')) || [];
+   
+   
+    gameResults.push({
+        username: currentUser.username,
+        score: currentUser.score,
+        date: currentUser.date,
+        timeLeft: currentUser.timeLeft
+    });
+   
+   
+    gameResults.sort((a, b) => {
+        if (b.score !== a.score) {
+            return b.score - a.score;
+        }
+        return b.timeLeft - a.timeLeft;
+    });
+   
+   
+    const topResults = gameResults.slice(0, 10);
+   
+   
+    localStorage.setItem('quizResults', JSON.stringify(topResults));
+}
+
+
+function showResults() {
+    const resultsSection = document.querySelector(".results-section");
+   
+   
+    const gameResults = JSON.parse(localStorage.getItem('quizResults')) || [];
+   
+   
+    let resultsHTML = `
+        <h2>${currentUser.username}, tu puntuación: ${score}/10</h2>
+        <p>Tiempo restante: ${formatTime(timeLeft)}</p>
+        <p>Fecha: ${currentUser.date}</p>
+    `;
+   
+   
+    if (gameResults.length > 0) {
+        resultsHTML += `
+            <div class="scoreboard">
+                <h3>🏆 Mejores Puntuaciones 🏆</h3>
+                <table>
+                    <tr>
+                        <th>Posición</th>
+                        <th>Nombre</th>
+                        <th>Puntuación</th>
+                        <th>Tiempo</th>
+                        <th>Fecha</th>
+                    </tr>
+        `;
+       
+        gameResults.forEach((result, index) => {
+            resultsHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${result.username}</td>
+                    <td>${result.score}/10</td>
+                    <td>${formatTime(result.timeLeft)}</td>
+                    <td>${result.date}</td>
+                </tr>
+            `;
+        });
+       
+        resultsHTML += `</table></div>`;
+    }
+   
+    resultsSection.innerHTML = resultsHTML;
+}
+
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lastUsername = localStorage.getItem('lastUsername');
+    if (lastUsername) {
+        document.getElementById("username").value = lastUsername;
+    }
+
+
+    //Form
+
+
+    forms.usernameForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const usernameInput = document.getElementById("username");
+    currentUser.username = usernameInput.value.trim();
+   
+    if (currentUser.username) {
+        localStorage.setItem('lastUsername', currentUser.username);
+        startQuiz();
+    } else {
+        alert("Por favor, ingresa un nombre de usuario.");
+    }
+    });
+
+
+
+
+    //Botones        
+    buttons.newGame.addEventListener("click", startNewGame);
+    buttons.startGame.addEventListener("click", () => {
+        currentUser.username = document.getElementById("username").value;
+        if (currentUser.username) {
+            showScreen("quizScreen");
+        } else {
+            alert("Por favor, ingresa un nombre de usuario.");
+        }    
+    });
+   
+    buttons.newQuiz.addEventListener("click", () => {
+   
+    const lastUsername = localStorage.getItem('lastUsername');
+    if (lastUsername) {
+        currentUser.username = lastUsername;
+        startQuiz();
+    } else {
+        showScreen("usernameScreen");
+    }
+    });
+   
+    buttons.backMenu.addEventListener("click", () => {
+        resetQuiz();
+        showScreen("mainScreen");
+    });
+});
+
+
+
+
+selectRandomQuestions();
+loadQuestion();
